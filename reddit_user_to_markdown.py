@@ -5,25 +5,29 @@ import requests
 import json
 import http.cookiejar
 from slugify import slugify
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # --- Configuration ---
 # The Reddit username to scrape
-USERNAME = "armadaofgold"
+USERNAME = os.getenv("REDDIT_USERNAME", "armadaofgold")
 
 # Number of posts to fetch (maximum ~1000 due to Reddit API limits)
-LIMIT = 300
+LIMIT = int(os.getenv("REDDIT_FETCH_LIMIT", 5))
 
 # Name of the Netscape-format cookie file (exported from browser)
-COOKIE_FILE = "cookies.txt"
+COOKIE_FILE = os.getenv("REDDIT_COOKIE_FILE", "reddit_cookies_ase.txt")
 
 # File to track already processed posts to allow resuming
-PROGRESS_FILE = "progress.jsonl"
+PROGRESS_FILE = os.getenv("REDDIT_PROGRESS_FILE", "progress.jsonl")
 
 # Directory where markdown files will be saved
-OUTPUT_DIR = USERNAME
+OUTPUT_DIR = os.getenv("REDDIT_OUTPUT_DIR", USERNAME)
 
 # Standard browser User-Agent
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+USER_AGENT = os.getenv("REDDIT_USER_AGENT", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36")
 
 # Create output directory if it doesn't exist
 if not os.path.exists(OUTPUT_DIR):
