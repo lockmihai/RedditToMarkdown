@@ -1,2 +1,6 @@
 requests
 python-slugify
+python-dotenv
+praw
+selenium
+webdriver-manager
